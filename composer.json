@@ -1,0 +1,33 @@
+{
+    "name": "perkora/php-sdk",
+    "description": "Official PHP SDK for integrating external applications with Perkora.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-hash": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Perkora\\SDK\\": "src/",
+            "Perkora\\SDK\\Laravel\\": "laravel/"
+        }
+    },
+    "suggest": {
+        "illuminate/support": "Required when using the Laravel service provider."
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Perkora\\SDK\\Laravel\\PerkoraServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require-dev": {
+        "phpunit/phpunit": "^12.5"
+    }
+}

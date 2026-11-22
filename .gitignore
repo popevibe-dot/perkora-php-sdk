@@ -1,0 +1,7 @@
+/vendor/
+/.phpunit.cache/
+/coverage/
+*.log
+.DS_Store
+
+/composer.lock
