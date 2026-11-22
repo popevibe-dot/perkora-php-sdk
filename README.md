@@ -2,6 +2,8 @@
 
 Official PHP SDK for connecting external applications to Perkora.
 
+**Current version:** 1.0.0
+
 ## Features
 
 - Plain PHP integration.
@@ -18,14 +20,39 @@ Official PHP SDK for connecting external applications to Perkora.
 - PHP 8.2 or newer.
 - PHP cURL extension.
 - PHP JSON extension.
+- PHP Hash extension.
 
-## Composer Installation
+## Installation with Composer
 
-```bash
-composer require perkora/php-sdk
+The package is currently distributed through GitHub.
+
+Add this repository configuration to your application's `composer.json`:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/popevibe-dot/perkora-php-sdk"
+        }
+    ],
+    "require": {
+        "perkora/php-sdk": "^1.0"
+    }
+}
 ```
 
+Then run:
+
+```bash
+composer update perkora/php-sdk
+```
+
+Once the package is registered on Packagist, the repository configuration will no longer be necessary.
+
 ## Laravel Installation
+
+The Laravel service provider is automatically discovered by Laravel.
 
 Publish the configuration:
 
@@ -42,9 +69,73 @@ PERKORA_SECRET=your_api_secret
 PERKORA_TIMEOUT=20
 ```
 
-## Plain PHP Installation
+Resolve the client through Laravel:
 
-Include Composer's autoloader:
+```php
+$perkora = app('perkora');
+
+$offers = $perkora->getOffers();
+```
+
+Or use the facade:
+
+```php
+use Perkora\SDK\Laravel\Perkora;
+
+$offers = Perkora::getOffers();
+```
+
+## Standalone Installation (Without Composer)
+
+The standalone installer downloads the SDK directly from GitHub and creates a PSR-4 autoloader.
+
+Requirements:
+
+- PHP 8.2 or newer.
+- PHP cURL extension.
+- PHP ZipArchive extension.
+
+First, download the installer:
+
+```bash
+curl -L https://raw.githubusercontent.com/popevibe-dot/perkora-php-sdk/v1.0.0/installer/install.php -o install.php
+```
+
+Run it from your project directory:
+
+```bash
+php install.php popevibe-dot/perkora-php-sdk v1.0.0
+```
+
+The SDK will be installed into:
+
+```text
+vendor/perkora/php-sdk/
+```
+
+Load the SDK:
+
+```php
+require_once __DIR__ . '/vendor/perkora/php-sdk/autoload.php';
+
+use Perkora\SDK\PerkoraClient;
+
+$perkora = PerkoraClient::create(
+    getenv('PERKORA_BASE_URL'),
+    getenv('PERKORA_KEY_ID'),
+    getenv('PERKORA_SECRET')
+);
+```
+
+You can also specify a different installation directory:
+
+```bash
+php install.php popevibe-dot/perkora-php-sdk v1.0.0 /path/to/project
+```
+
+## Plain PHP Usage
+
+If you installed through Composer, load Composer's autoloader:
 
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -57,6 +148,8 @@ $perkora = PerkoraClient::create(
     getenv('PERKORA_SECRET')
 );
 ```
+
+If you used the standalone installer, use its autoloader instead.
 
 ## Available Methods
 
@@ -94,24 +187,6 @@ $result = $perkora->getCompletionStatus(
 );
 ```
 
-## Laravel Usage
-
-Resolve the client through the service container:
-
-```php
-$perkora = app('perkora');
-
-$offers = $perkora->getOffers();
-```
-
-Or use the facade:
-
-```php
-use Perkora\SDK\Laravel\Perkora;
-
-$offers = Perkora::getOffers();
-```
-
 ## Important Integration Rules
 
 1. Your project must be approved and registered by the Perkora administrator before API credentials can be issued.
@@ -136,3 +211,9 @@ try {
     echo $exception->getHttpStatus();
 }
 ```
+
+## Versioning
+
+Releases are published on GitHub:
+
+https://github.com/popevibe-dot/perkora-php-sdk/releases
