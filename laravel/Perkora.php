@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array getOffers()
  * @method static array completeOffer(string $externalEventId, string $externalUserId, string $externalOfferId, ?array $metadata = null)
  * @method static array getCompletionStatus(string $externalEventId)
+ * @method static array getLinkStatus(string $externalUserId)
  *
  * @see \Perkora\SDK\PerkoraClient
  */

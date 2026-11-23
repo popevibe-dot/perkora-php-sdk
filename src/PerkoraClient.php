@@ -49,6 +49,23 @@ final class PerkoraClient
         );
     }
 
+        /**
+     * Check whether an external account is linked.
+     */
+    public function getLinkStatus(
+        string $externalUserId
+    ): array {
+        $this->requireValue($externalUserId, 'External user ID');
+
+        return $this->transport->request(
+            'POST',
+            '/api/integrations/link-status',
+            $this->encode([
+                'external_user_id' => $externalUserId,
+            ])
+        );
+    }
+
     /**
      * Retrieve offers assigned to this integration.
      */
